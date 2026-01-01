@@ -1,6 +1,6 @@
 import antigone/mutable
 
-pub fn mutable_test_init() {
+pub fn mutable_test() {
   let initial = 0
   let #(val, _) = mutable.tuple_from(initial)
   assert val() == initial
@@ -12,7 +12,7 @@ pub fn mutable_test_init() {
     as "value initializes to the right value: mutable.from"
 }
 
-pub fn mutable_test_identity() {
+pub fn mutable_identity_test() {
   let mut_1 = mutable.from(0)
   let mut_2 = mutable.from(0)
   assert mut_1 != mut_2 as "mutables have separate identities"

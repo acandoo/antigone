@@ -1,5 +1,7 @@
 export function mutableFrom(value) {
-  return { value }
+  // UUID created to make equaity checks in Gleam fail
+  let uuid = Symbol()
+  return { value, uuid }
 }
 
 export function mutableGet({ value }) {
