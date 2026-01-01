@@ -1,12 +1,14 @@
 //// The `mutable` module allows you to use mutable values of any type within your code.
 
-// note to self: implement Mutable in erlang through process housing value and message passing
-
 /// The `Mutable` generic type houses a reference to the value of the specified type stored elsewhere in memory.
 /// 
-/// Implementation note: On JavaScript, `Mutable(a)` values correspond to an object of type `{ value: a }`.
+/// Implementation notes:
+/// 
+/// - On JavaScript, `Mutable(a)` values correspond to an object of type `{ value: a }`.
 /// This may be subject to change, so if you (for some reason) are writing bindings in JavaScript that
 /// requires the Mutable type, please don't use this.
+/// 
+/// - On Erlang, mutability is achieved through a process that is sent get or set operations, and loops with a new value.
 pub type Mutable(a)
 
 /// Creates a `#(getter, setter)` tuple from a value.
@@ -51,13 +53,16 @@ pub fn to_tuple(mut: Mutable(a)) -> #(fn() -> a, fn(a) -> Nil) {
 }
 
 /// Creates a [`Mutable`](#Mutable) from a value.
+@external(erlang, "mutable_ffi", "mutable_from")
 @external(javascript, "./mutable_ffi.mjs", "mutableFrom")
 pub fn from(value: a) -> Mutable(a)
 
 /// Gets the value of a [`Mutable`](#Mutable).
+@external(erlang, "mutable_ffi", "mutable_get")
 @external(javascript, "./mutable_ffi.mjs", "mutableGet")
 pub fn get(mut: Mutable(a)) -> a
 
 /// Updates the value of a [`Mutable`](#Mutable).
+@external(erlang, "mutable_ffi", "mutable_set")
 @external(javascript, "./mutable_ffi.mjs", "mutableSet")
 pub fn set(mut: Mutable(a), value: a) -> Nil
